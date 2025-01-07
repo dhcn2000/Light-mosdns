@@ -26,3 +26,8 @@ $ cd light-mosdns
 $ chmod +x light-mosdns.sh
 $ ./light-mosdns.sh
 ```
+## Todo
+- [ ] Support for custom server type and port
+- [ ] Manager script self-update
+- [ ] Run management functions under normal user permissions
+- [ ] Generate systemd unit file by script
