@@ -1,75 +1,5 @@
 #!/bin/bash
 
-case $1 in
-    install)
-        case $2 in
-            -r|--release)
-                CheckDependencies
-                DownloadMosdns
-                InstallMosdns
-                DownloadRules
-                ;;
-            -m|--manual)
-                CheckDependencies
-                FindMosdns
-                InstallMosdns
-                DownloadRules
-                ;;
-            -a|--autoupdate)
-                SetAutoUpdate
-                ;;
-            *)
-                echo "Usage: $0 install {-r|--release} : Install mosdns from release."
-                echo "Usage: $0 install {-m|--manual} : Install mosdns from local directory."
-                echo "Usage: $0 install {-a|--autoupdate} : Set auto update rules."
-                echo "Please run with root privilege."
-                exit 1
-                ;;
-        esac
-        ;;
-    start)
-        echo "Starting mosdns..."
-        systemctl start mosdns
-        echo "Mosdns started."
-        ;;
-    stop)
-        echo "Stopping mosdns..."
-        systemctl stop mosdns
-        echo "Mosdns stopped."
-        ;;
-    restart)
-        echo "Restarting mosdns..." 
-        systemctl restart mosdns
-        echo "Mosdns restarted."
-        ;;
-    update)
-        case $2 in
-            -r|--reboot)
-                echo "Updating rules with reboot..."
-                UpdateRules
-                systemctl restart mosdns
-                echo "Rules updated and applied."
-                ;;
-            -d|--dryrun)
-                echo "Updating rules without reboot..."
-                UpdateRules
-                echo "Rules updated. Please restart mosdns service to apply rules."
-                ;;
-            *)
-                echo "Usage: $0 update {-r|--reboot} : Update rules with reboot. Rules will be applied after service restart."
-                echo "Usage: $0 update {-d|--dryrun} : Update rules without reboot. Rules will not be applied until service restart."
-                echo "Please run with root privilege."
-                exit 1
-                ;;
-        esac
-        ;;
-    *)
-        echo "Usage: $0 {install|start|stop|restart|update}"
-        echo ""
-        exit 1
-        ;;
-esac
-
 function CheckDependencies() {
     local DEPENDENCIES=(curl unzip systemd git go crontab)
     for i in "${DEPENDENCIES[@]}"; do
@@ -281,3 +211,72 @@ function SetAutoUpdate() {
     echo "$CRON_TIME root /usr/local/bin/mosdnsmanager update -r" > /etc/cron.d/mosdns
     echo -e "\e[1;32mAuto update rules set.\e[0m"
 }
+
+case $1 in
+    install)
+        case $2 in
+            -r|--release)
+                CheckDependencies
+                DownloadMosdns
+                InstallMosdns
+                DownloadRules
+                ;;
+            -m|--manual)
+                CheckDependencies
+                FindMosdns
+                InstallMosdns
+                DownloadRules
+                ;;
+            -a|--autoupdate)
+                SetAutoUpdate
+                ;;
+            *)
+                echo "Usage: $0 install {-r|--release} : Install mosdns from release."
+                echo "Usage: $0 install {-m|--manual} : Install mosdns from local directory."
+                echo "Usage: $0 install {-a|--autoupdate} : Set auto update rules."
+                echo "Please run with root privilege."
+                exit 1
+                ;;
+        esac
+        ;;
+    start)
+        echo "Starting mosdns..."
+        systemctl start mosdns
+        echo "Mosdns started."
+        ;;
+    stop)
+        echo "Stopping mosdns..."
+        systemctl stop mosdns
+        echo "Mosdns stopped."
+        ;;
+    restart)
+        echo "Restarting mosdns..." 
+        systemctl restart mosdns
+        echo "Mosdns restarted."
+        ;;
+    update)
+        case $2 in
+            -r|--reboot)
+                echo "Updating rules with reboot..."
+                UpdateRules
+                systemctl restart mosdns
+                echo "Rules updated and applied."
+                ;;
+            -d|--dryrun)
+                echo "Updating rules without reboot..."
+                UpdateRules
+                echo "Rules updated. Please restart mosdns service to apply rules."
+                ;;
+            *)
+                echo "Usage: $0 update {-r|--reboot} : Update rules with reboot. Rules will be applied after service restart."
+                echo "Usage: $0 update {-d|--dryrun} : Update rules without reboot. Rules will not be applied until service restart."
+                echo "Please run with root privilege."
+                exit 1
+                ;;
+        esac
+        ;;
+    *)
+        echo "Usage: $0 {install|start|stop|restart|update}"
+        exit 1
+        ;;
+esac
