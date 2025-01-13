@@ -2,11 +2,17 @@
 
 function CheckDependencies() {
     local DEPENDENCIES=(curl unzip systemd git go crontab)
+    MISSING_DEPENDENCIES=()
     for i in "${DEPENDENCIES[@]}"; do
         if ! command -v $i &> /dev/null; then
             echo -e "\e[1;31mPlease install $i first.\e[0m"
+            MISSING_DEPENDENCIES+=($i)
         fi
     done
+    if [ ${#MISSING_DEPENDENCIES[@]} -ne 0 ]; then
+        echo -e "\e[1;31mMissing dependencies: ${MISSING_DEPENDENCIES[@]}\e[0m"
+        exit 1
+    fi
 }
 
 function DownloadMosdns() {
