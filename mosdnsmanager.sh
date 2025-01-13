@@ -62,6 +62,7 @@ case $1 in
                 exit 1
                 ;;
         esac
+        ;;
     *)
         echo "Usage: $0 {install|start|stop|restart|update}"
         echo ""
