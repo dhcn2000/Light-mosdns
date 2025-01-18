@@ -1,6 +1,13 @@
 #!/bin/bash
 
-function CheckDependencies() {
+error_handler() {
+    echo -e "\e[1;31mError: $1\e[0m"
+    exit 1
+}
+
+trap 'error_handler' ERR
+
+CheckDependencies() {
     local DEPENDENCIES=(curl unzip systemd git go crontab)
     MISSING_DEPENDENCIES=()
     for i in "${DEPENDENCIES[@]}"; do
@@ -15,7 +22,7 @@ function CheckDependencies() {
     fi
 }
 
-function DownloadMosdns() {
+DownloadMosdns() {
     #get machine architecture
     ARCH=$(uname -m)
     TMPDIR=$(mktemp -d) || exit 1
@@ -58,7 +65,7 @@ function DownloadMosdns() {
     rm -rf $TMPDIR
 }
 
-function FindMosdns() {
+FindMosdns() {
     #find local directory
     EXIST=$(find . -name mosdns)
     if [ -z $EXIST ]; then
@@ -68,7 +75,7 @@ function FindMosdns() {
     echo -e "\e[1;32mFound mosdns binary in the current directory.\e[0m"
 }
 
-function InstallMosdns() {
+InstallMosdns() {
     ARCH=$(uname -m)
     TMPDIR=$(mktemp -d) || exit 1
 
@@ -117,7 +124,7 @@ function InstallMosdns() {
     echo -e "\e[1;32mMosdns installed.\e[0m"
 }
 
-function DownloadRules(){
+DownloadRules(){
     mkdir -p /usr/share/v2ray
     v2dat_dir="/usr/share/v2ray"
     TMPDIR=$(mktemp -d) || exit 1
@@ -175,7 +182,7 @@ function DownloadRules(){
     rm -rf "$TMPDIR"
 }
 
-function UpdateRules() {
+UpdateRules() {
     TMPDIR=$(mktemp -d) || exit 1
     # BGP chnroute
     echo -e "\e[1;32mDownloading https://github.com/misakaio/chnroutes2/raw/refs/heads/master/chnroutes.txt\e[0m"
@@ -206,7 +213,7 @@ function UpdateRules() {
     rm -rf "$TMPDIR"
 }
 
-function SetAutoUpdate() {
+SetAutoUpdate() {
     echo -e "\e[1;32mSetting auto update rules...\e[0m"
     TIMEZONE=$(timedatectl | grep "Time zone" | awk '{print $3}')
     if [ "$TIMEZONE" == "UTC" ]; then
