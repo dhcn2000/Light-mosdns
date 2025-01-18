@@ -65,6 +65,7 @@ function FindMosdns() {
         echo -e "\e[1;31mPlease place mosdns binary in the current directory and try again.\e[0m"
         exit 1
     fi
+    echo -e "\e[1;32mFound mosdns binary in the current directory.\e[0m"
 }
 
 function InstallMosdns() {
@@ -83,13 +84,15 @@ function InstallMosdns() {
     done
     
     # make v2dat
-    go build -ldflags "-s -w" -trimpath -o "$TMPDIR/v2dat/v2dat" "$TMPDIR/v2dat"
+    cd "$TMPDIR/v2dat"
+    go build -ldflags "-s -w" -trimpath -o v2dat
     if [ $? -ne 0 ]; then
         echo -e "\e[1;31mBuild v2dat failed\e[0m"
         rm -rf "$TMPDIR"
         exit 1
     fi
 
+    cd -
     set -e
     echo -e "\e[1;32mInstalling mosdns...\e[0m"
     mv ./mosdns /usr/local/bin/mosdns
