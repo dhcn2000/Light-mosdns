@@ -191,6 +191,7 @@ DownloadRules(){
     v2dat unpack geosite -o /etc/mosdns/geoip/ -f cn $v2dat_dir/geosite.dat
     cp "$TMPDIR/geoip_cn.txt" /etc/mosdns/geoip/geoip_cn.txt
     rm -rf "$TMPDIR"
+    echo -e "\e[1;32mRules installed.\e[0m"
 }
 
 UpdateRules() {
