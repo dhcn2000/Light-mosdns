@@ -110,7 +110,7 @@ InstallV2dat() {
 InstallMosdns() {
     set -e
     echo -e "\e[1;32mInstalling mosdns...\e[0m"
-    mv ./mosdns /usr/local/bin/mosdns
+    cp ./mosdns /usr/local/bin/mosdns
     chown root:root /usr/local/bin/mosdns
     chmod 755 /usr/local/bin/mosdns
     
@@ -120,7 +120,7 @@ InstallMosdns() {
     chmod 755 /usr/local/bin/mosdnsmanager
 
     mkdir -p /etc/mosdns/geoip
-    mv ./config.yaml.example /etc/mosdns/config.yaml
+    cp ./config.yaml.example /etc/mosdns/config.yaml
     mosdns service install -d /etc/mosdns/
     mkdir -p /etc/mosdns/hosts
     touch /etc/mosdns/hosts/hosts.txt
