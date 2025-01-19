@@ -228,7 +228,7 @@ UpdateRules() {
 SetAutoUpdate() {
     echo -e "\e[1;32mSetting auto update rules...\e[0m"
     TIMEZONE=$(timedatectl | grep "Time zone" | awk '{print $3}')
-    if [ "$TIMEZONE" == "UTC" ]; then
+    if [ "$TIMEZONE" == "Etc/UTC" ]; then
         CRON_TIME="20 16 * * *"
     elif [ "$TIMEZONE" == "Asia/Shanghai" ]; then
         CRON_TIME="0 4 * * *"
