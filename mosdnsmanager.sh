@@ -108,6 +108,14 @@ InstallV2dat() {
 }
 
 InstallMosdns() {
+    UNIT_FILE=$(find /etc/systemd/system -name mosdns.service)
+    if [ -n "$UNIT_FILE" ]; then
+        echo -e "\e[1;32mFound mosdns service file in $UNIT_FILE, Now remove it.\e[0m"
+        systemctl stop mosdns
+        systemctl disable mosdns
+        rm -f $UNIT_FILE
+    fi
+
     set -e
     echo -e "\e[1;32mInstalling mosdns...\e[0m"
     cp ./mosdns /usr/local/bin/mosdns
