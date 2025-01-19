@@ -75,8 +75,7 @@ FindMosdns() {
     echo -e "\e[1;32mFound mosdns binary in the current directory.\e[0m"
 }
 
-InstallMosdns() {
-    ARCH=$(uname -m)
+InstallV2dat() {
     TMPDIR=$(mktemp -d) || exit 1
 
     for i in {1..3}; do
@@ -89,7 +88,7 @@ InstallMosdns() {
             break
         fi
     done
-    
+
     # make v2dat
     cd "$TMPDIR/v2dat"
     go build -ldflags "-s -w" -trimpath -o v2dat
@@ -99,18 +98,22 @@ InstallMosdns() {
         exit 1
     fi
 
+    set -e
     cd -
+    echo -e "\e[1;32mInstalling v2dat...\e[0m"
+    mv "$TMPDIR/v2dat/v2dat" /usr/local/bin/v2dat
+    chown root:root /usr/local/bin/v2dat
+    chmod 755 /usr/local/bin/v2dat
+
+}
+
+InstallMosdns() {
     set -e
     echo -e "\e[1;32mInstalling mosdns...\e[0m"
     mv ./mosdns /usr/local/bin/mosdns
     chown root:root /usr/local/bin/mosdns
     chmod 755 /usr/local/bin/mosdns
     
-    echo -e "\e[1;32mInstalling v2dat...\e[0m"
-    mv "$TMPDIR/v2dat/v2dat" /usr/local/bin/v2dat
-    chown root:root /usr/local/bin/v2dat
-    chmod 755 /usr/local/bin/v2dat
-
     echo -e "\e[1;32mInstalling mosdnsmanager...\e[0m"
     cp ./mosdnsmanager.sh /usr/local/bin/mosdnsmanager
     chown root:root /usr/local/bin/mosdnsmanager
@@ -234,12 +237,14 @@ case $1 in
             -r|--release)
                 CheckDependencies
                 DownloadMosdns
+                InstallV2dat
                 InstallMosdns
                 DownloadRules
                 ;;
             -m|--manual)
                 CheckDependencies
                 FindMosdns
+                InstallV2dat
                 InstallMosdns
                 DownloadRules
                 ;;
