@@ -1,5 +1,8 @@
 #!/bin/bash
 
+apt update
+apt install wget git unzip golang curl -y
+
 error_handler() {
     echo -e "\e[1;31mError: $1\e[0m"
     exit 1
