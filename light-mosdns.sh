@@ -31,7 +31,7 @@ DownloadMosdns() {
         x86_64)
             for i in {1..3}; do
             echo -e "\e[1;32mDownloading amd64 version mosdns...\e[0m"
-            curl --connect-timeout 5 -m 10 --ipv4 -kfSLo "$TMPDIR/mosdns-linux-amd64.zip" "https://github.com/IrineSistiana/mosdns/releases/download/latest/mosdns-linux-amd64.zip"
+            curl --connect-timeout 5 -m 10 --ipv4 -kfSLo "$TMPDIR/mosdns-linux-amd64.zip" "https://git.zhike.in/https://github.com/IrineSistiana/mosdns/releases/download/latest/mosdns-linux-amd64.zip"
                 if [ $? -ne 0 ]; then
                     rm -f "$TMPDIR/mosdns-linux-amd64.zip"
                     echo -e "\e[1;31mDownload failed, retrying ($i/3)...\e[0m"
@@ -43,7 +43,7 @@ DownloadMosdns() {
         aarch64)
             for i in {1..3}; do
             echo -e "\e[1;32mDownloading arm64 version mosdns...\e[0m"
-            curl --connect-timeout 5 -m 10 --ipv4 -kfSLo "$TMPDIR/mosdns-linux-amd64.zip" "https://github.com/IrineSistiana/mosdns/releases/download/latest/mosdns-linux-arm64.zip"
+            curl --connect-timeout 5 -m 10 --ipv4 -kfSLo "$TMPDIR/mosdns-linux-amd64.zip" "https://git.zhike.in/https://github.com/IrineSistiana/mosdns/releases/download/latest/mosdns-linux-arm64.zip"
                 if [ $? -ne 0 ]; then
                     rm -f "$TMPDIR/mosdns-linux-arm64.zip"
                     echo -e "\e[1;31mDownload failed, retrying ($i/3)...\e[0m"
@@ -80,7 +80,7 @@ InstallV2dat() {
 
     for i in {1..3}; do
         echo -e "\e[1;32mClone v2dat from urlesistiana/v2dat\e[0m"
-        git clone https://github.com/urlesistiana/v2dat.git "$TMPDIR/v2dat"
+        git clone https://git.zhike.in/https://github.com/urlesistiana/v2dat.git "$TMPDIR/v2dat"
         if [ $? -ne 0 ]; then
             rm -rf "$TMPDIR/v2dat"
             echo -e "\e[1;31mClone failed, retrying ($i/3)...\e[0m"
@@ -142,8 +142,8 @@ DownloadRules(){
 
     # BGP chnroute
     for i in {1..3}; do
-        echo -e "\e[1;32mDownloading https://github.com/misakaio/chnroutes2/raw/refs/heads/master/chnroutes.txt\e[0m"
-        curl --connect-timeout 5 -m 120 --ipv4 -kfSLo "$TMPDIR/geoip_cn.txt" "https://github.com/misakaio/chnroutes2/raw/refs/heads/master/chnroutes.txt"
+        echo -e "\e[1;32mDownloading https://git.zhike.in/https://github.com/misakaio/chnroutes2/raw/refs/heads/master/chnroutes.txt\e[0m"
+        curl --connect-timeout 5 -m 120 --ipv4 -kfSLo "$TMPDIR/geoip_cn.txt" "https://git.zhike.in/https://github.com/misakaio/chnroutes2/raw/refs/heads/master/chnroutes.txt"
         if [ $? -ne 0 ]; then
             rm -f "$TMPDIR/geoip_cn.txt"
             echo -e "\e[1;31mDownload failed, retrying ($i/3)...\e[0m"
@@ -155,8 +155,8 @@ DownloadRules(){
 
     # geosite.dat
     for i in {1..3}; do
-        echo -e "\e[1;32mDownloading https://github.com/Loyalsoldier/v2ray-rules-dat/releases/latest/download/geosite.dat\e[0m"
-        curl --connect-timeout 5 -m 120 --ipv4 -kfSLo "$TMPDIR/geosite.dat" "https://github.com/Loyalsoldier/v2ray-rules-dat/releases/latest/download/geosite.dat"
+        echo -e "\e[1;32mDownloading https://git.zhike.in/https://github.com/Loyalsoldier/v2ray-rules-dat/releases/latest/download/geosite.dat\e[0m"
+        curl --connect-timeout 5 -m 120 --ipv4 -kfSLo "$TMPDIR/geosite.dat" "https://git.zhike.in/https://github.com/Loyalsoldier/v2ray-rules-dat/releases/latest/download/geosite.dat"
         if [ $? -ne 0 ]; then
             rm -f "$TMPDIR/geosite.dat"
             echo -e "\e[1;31mDownload failed, retrying ($i/3)...\e[0m"
@@ -166,8 +166,8 @@ DownloadRules(){
     done
     # checksum - geosite.dat
     for i in {1..3}; do
-        echo -e "\e[1;32mDownloading https://github.com/Loyalsoldier/v2ray-rules-dat/releases/latest/download/geosite.dat.sha256sum\e[0m"
-        curl --connect-timeout 5 -m 10 --ipv4 -kfSLo "$TMPDIR/geosite.dat.sha256sum" "https://github.com/Loyalsoldier/v2ray-rules-dat/releases/latest/download/geosite.dat.sha256sum"
+        echo -e "\e[1;32mDownloading https://git.zhike.in/https://github.com/Loyalsoldier/v2ray-rules-dat/releases/latest/download/geosite.dat.sha256sum\e[0m"
+        curl --connect-timeout 5 -m 10 --ipv4 -kfSLo "$TMPDIR/geosite.dat.sha256sum" "https://git.zhike.in/https://github.com/Loyalsoldier/v2ray-rules-dat/releases/latest/download/geosite.dat.sha256sum"
         if [ $? -ne 0 ]; then
             rm -f "$TMPDIR/geosite.dat.sha256sum"
             echo -e "\e[1;31mDownload failed, retrying ($i/3)...\e[0m"
@@ -197,17 +197,17 @@ DownloadRules(){
 UpdateRules() {
     TMPDIR=$(mktemp -d) || exit 1
     # BGP chnroute
-    echo -e "\e[1;32mDownloading https://github.com/misakaio/chnroutes2/raw/refs/heads/master/chnroutes.txt\e[0m"
-    curl --connect-timeout 5 -m 120 --ipv4 -kfSLo "$TMPDIR/geoip_cn.txt" "https://github.com/misakaio/chnroutes2/raw/refs/heads/master/chnroutes.txt"
+    echo -e "\e[1;32mDownloading https://git.zhike.in/https://github.com/misakaio/chnroutes2/raw/refs/heads/master/chnroutes.txt\e[0m"
+    curl --connect-timeout 5 -m 120 --ipv4 -kfSLo "$TMPDIR/geoip_cn.txt" "https://git.zhike.in/https://github.com/misakaio/chnroutes2/raw/refs/heads/master/chnroutes.txt"
     [ $? -ne 0 ] && rm -rf "$TMPDIR" && exit 1
 
     # geosite.dat
-    echo -e "\e[1;32mDownloading https://github.com/Loyalsoldier/v2ray-rules-dat/releases/latest/download/geosite.dat\e[0m"
-    curl --connect-timeout 5 -m 120 --ipv4 -kfSLo "$TMPDIR/geosite.dat" "https://github.com/Loyalsoldier/v2ray-rules-dat/releases/latest/download/geosite.dat"
+    echo -e "\e[1;32mDownloading https://git.zhike.in/https://github.com/Loyalsoldier/v2ray-rules-dat/releases/latest/download/geosite.dat\e[0m"
+    curl --connect-timeout 5 -m 120 --ipv4 -kfSLo "$TMPDIR/geosite.dat" "https://git.zhike.in/https://github.com/Loyalsoldier/v2ray-rules-dat/releases/latest/download/geosite.dat"
     [ $? -ne 0 ] && rm -rf "$TMPDIR" && exit 1
     # checksum - geosite.dat
-    echo -e "\e[1;32mDownloading https://github.com/Loyalsoldier/v2ray-rules-dat/releases/latest/download/geosite.dat.sha256sum\e[0m"
-    curl --connect-timeout 5 -m 10 --ipv4 -kfSLo "$TMPDIR/geosite.dat.sha256sum" "https://github.com/Loyalsoldier/v2ray-rules-dat/releases/latest/download/geosite.dat.sha256sum"
+    echo -e "\e[1;32mDownloading https://git.zhike.in/https://github.com/Loyalsoldier/v2ray-rules-dat/releases/latest/download/geosite.dat.sha256sum\e[0m"
+    curl --connect-timeout 5 -m 10 --ipv4 -kfSLo "$TMPDIR/geosite.dat.sha256sum" "https://git.zhike.in/https://github.com/Loyalsoldier/v2ray-rules-dat/releases/latest/download/geosite.dat.sha256sum"
     [ $? -ne 0 ] && rm -rf "$TMPDIR" && exit 1
     if [ "$(sha256sum "$TMPDIR/geosite.dat" | awk '{print $1}')" != "$(cat "$TMPDIR/geosite.dat.sha256sum" | awk '{print $1}')" ]; then
         echo -e "\e[1;31mgeosite.dat checksum error\e[0m"
