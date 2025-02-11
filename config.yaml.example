@@ -93,9 +93,21 @@ plugins:
     type: forward
     args:
       upstreams:
+        - addr: "https://doh.pub/dns-query"
+          dial_addr: "1.12.12.12"
+        - addr: "https://doh.pub/dns-query"
+          dial_addr: "120.53.53.53"
+
         - addr: tls://8.8.8.8
           enable_pipeline: true
         - addr: tls://8.8.4.4
+          enable_pipeline: true
+       
+        - addr: "tls://dot.pub"
+          dial_addr: "1.12.12.12"
+          enable_pipeline: true
+        - addr: "tls://dot.pub"
+          dial_addr: "120.53.53.53"
           enable_pipeline: true
 
   #*解析流程组件*#
